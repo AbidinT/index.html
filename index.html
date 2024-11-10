@@ -12,6 +12,9 @@
             font-family: -apple-system, system-ui, BlinkMacSystemFont;
             background: #000;
             color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         .header {
             background: #1a1a1a;
@@ -20,40 +23,75 @@
             border-bottom: 1px solid #333;
         }
         .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 1rem;
         }
         .card {
             background: #1a1a1a;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            position: absolute;
+        }
+        .card.active {
+            opacity: 1;
         }
         .currency-name {
-            font-size: 18px;
+            font-size: 24px;
             color: #888;
+            margin-bottom: 20px;
         }
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
+        .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
         .arrow {
             color: #00ff00;
-            font-size: 24px;
+            font-size: 36px;
             animation: bounce 1s infinite;
-            margin-left: 10px;
+        }
+        .price {
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
         }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-10px); }
         }
         .percentage {
             color: #00ff00;
-            font-size: 14px;
-            margin-left: 5px;
+            font-size: 24px;
+            display: block;
+        }
+        .dots {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            transition: background-color 0.3s ease;
+        }
+        .dot.active {
+            background: #fff;
         }
     </style>
 </head>
@@ -63,6 +101,7 @@
     </div>
     <div class="content" id="prices">
     </div>
+    <div class="dots" id="dots"></div>
 
     <script>
         const data = [
@@ -74,32 +113,49 @@
             { name: 'Bitcoin', price: '71.234 $' }
         ];
 
-        function createPriceCards() {
+        let currentIndex = 0;
+
+        function createCards() {
             const container = document.getElementById('prices');
-            data.forEach(item => {
+            const dotsContainer = document.getElementById('dots');
+            
+            data.forEach((item, index) => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = `card ${index === 0 ? 'active' : ''}`;
                 card.innerHTML = `
                     <div class="currency-name">${item.name}</div>
-                    <div style="display: flex; align-items: center;">
-                        <span class="price">${item.price}</span>
-                        <span class="percentage">+${(Math.random() * 2 + 0.1).toFixed(2)}%</span>
+                    <div class="price-container">
                         <span class="arrow">↑</span>
+                        <span class="price">${item.price}</span>
                     </div>
+                    <span class="percentage">+${(Math.random() * 2 + 0.1).toFixed(2)}%</span>
                 `;
                 container.appendChild(card);
+
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dotsContainer.appendChild(dot);
             });
         }
 
-        createPriceCards();
-
-        // Her 3 saniyede bir yüzdeleri güncelle
-        setInterval(() => {
+        function updateCards() {
+            const cards = document.querySelectorAll('.card');
+            const dots = document.querySelectorAll('.dot');
             const percentages = document.querySelectorAll('.percentage');
-            percentages.forEach(percentage => {
-                percentage.textContent = `+${(Math.random() * 2 + 0.1).toFixed(2)}%`;
-            });
-        }, 3000);
+            
+            cards[currentIndex].className = 'card';
+            dots[currentIndex].className = 'dot';
+            
+            currentIndex = (currentIndex + 1) % cards.length;
+            
+            cards[currentIndex].className = 'card active';
+            dots[currentIndex].className = 'dot active';
+            
+            percentages[currentIndex].textContent = `+${(Math.random() * 2 + 0.1).toFixed(2)}%`;
+        }
+
+        createCards();
+        setInterval(updateCards, 3000);
 
         // Service Worker kaydı
         if ('serviceWorker' in navigator) {
