@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finansal Göstergeler</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkZpbmFuc2FsIEfDtnN0ZXJnZWxlciIsCiAgInNob3J0X25hbWUiOiAiRmluYW5zIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIKfQ==">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont;
+            background: #000;
+            color: white;
+        }
+        .header {
+            background: #1a1a1a;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        .content {
+            padding: 1rem;
+        }
+        .card {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .currency-name {
+            font-size: 18px;
+            color: #888;
+        }
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        .arrow {
+            color: #00ff00;
+            font-size: 24px;
+            animation: bounce 1s infinite;
+            margin-left: 10px;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .percentage {
+            color: #00ff00;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Finansal Göstergeler</h1>
+    </div>
+    <div class="content" id="prices">
+    </div>
+
+    <script>
+        const data = [
+            { name: 'Dolar', price: '31.27 ₺' },
+            { name: 'Euro', price: '33.85 ₺' },
+            { name: 'Sterlin', price: '39.46 ₺' },
+            { name: 'Altın', price: '2.047 ₺' },
+            { name: 'BIST 100', price: '9.247' },
+            { name: 'Bitcoin', price: '71.234 $' }
+        ];
+
+        function createPriceCards() {
+            const container = document.getElementById('prices');
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="currency-name">${item.name}</div>
+                    <div style="display: flex; align-items: center;">
+                        <span class="price">${item.price}</span>
+                        <span class="percentage">+${(Math.random() * 2 + 0.1).toFixed(2)}%</span>
+                        <span class="arrow">↑</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        createPriceCards();
+
+        // Her 3 saniyede bir yüzdeleri güncelle
+        setInterval(() => {
+            const percentages = document.querySelectorAll('.percentage');
+            percentages.forEach(percentage => {
+                percentage.textContent = `+${(Math.random() * 2 + 0.1).toFixed(2)}%`;
+            });
+        }, 3000);
+
+        // Service Worker kaydı
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgKGV2ZW50KSA9PiB7CiAgZXZlbnQud2FpdFVudGlsKAogICAgY2FjaGVzLm9wZW4oJ3YxJykudGhlbigoY2FjaGUpID0+IHsKICAgICAgcmV0dXJuIGNhY2hlLmFkZEFsbChbCiAgICAgICAgJy4vJywKICAgICAgXSk7CiAgICB9KQogICk7Cn0pOwoKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIChldmVudCkgPT4gewogIGV2ZW50LnJlc3BvbmRXaXRoKAogICAgY2FjaGVzLm1hdGNoKGV2ZW50LnJlcXVlc3QpCiAgICAgIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UgfHwgZmV0Y2goZXZlbnQucmVxdWVzdCkpCiAgKTsKfSk7');
+        }
+    </script>
+</body>
+</html>
