@@ -8,6 +8,7 @@
       rel="manifest"
       href="data:application/json;base64,ewogICJuYW1lIjogIkZpbmFuc2FsIEfDtnN0ZXJnZWxlciIsCiAgInNob3J0X25hbWUiOiAiRmluYW5zIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIKfQ=="
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
       body {
         margin: 0;
@@ -103,16 +104,45 @@
       .dot.active {
         background: #fff;
       }
+      #counter {
+        border: 1px solid #00ff00;
+        width: 45px;
+        background-color: green;
+      }
+      #upper {
+        width: 70px;
+        border-color: #00ff00;
+        color: #00ff00;
+        
+      }
+      #reload {
+        width: 70px;
+        border-color: #00ff00;
+        color: #00ff00;
+
+      }
     </style>
   </head>
   <body>
     <div class="header">
       <h1>Finansal Göstergeler</h1>
     </div>
+    <button onclick="say()" id="upper" i class="fa-solid fa-plus"></i></button>
+    <button onclick="reload()" id="reload" i class="fa-solid fa-arrows-rotate"></i></button>
+    <div id="counter">0</div>
     <div class="content" id="prices"></div>
     <div class="dots" id="dots"></div>
 
     <script>
+      sayac = 0;
+      function say() {
+        sayac++;
+        var arttir = document.querySelector("#counter");
+        arttir.textContent = sayac;
+      }
+      function reload() {
+        location.reload();
+      }
       const data = [
         { name: "Hoş Geldiniz ABİDİN Bey", price: "100%" },
         { name: "Dolar", price: "31.27 ₺" },
