@@ -1,166 +1,184 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finansal Göstergeler</title>
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkZpbmFuc2FsIEfDtnN0ZXJnZWxlciIsCiAgInNob3J0X25hbWUiOiAiRmluYW5zIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIKfQ==">
+    <link
+      rel="manifest"
+      href="data:application/json;base64,ewogICJuYW1lIjogIkZpbmFuc2FsIEfDtnN0ZXJnZWxlciIsCiAgInNob3J0X25hbWUiOiAiRmluYW5zIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIKfQ=="
+    />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, system-ui, BlinkMacSystemFont;
-            background: #000;
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont;
+        background: #000;
+        color: white;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .header {
+        background: #1a1a1a;
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid #333;
+      }
+      .content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 1rem;
+      }
+      .card {
+        background: #1a1a1a;
+        border-radius: 20px;
+        padding: 30px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        position: absolute;
+        border: 2px solid #00ff00;
+      }
+      .card.active {
+        opacity: 1;
+      }
+      .currency-name {
+        font-size: 24px;
+        color: #888;
+        margin-bottom: 20px;
+      }
+      .price-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .arrow {
+        color: #00ff00;
+        font-size: 36px;
+        /*animation: bounce 1s infinite;*/
+      }
+      .price {
+        font-size: 40px;
+        font-weight: bold;
+        color: #00ff00;
+      }
+      /*@keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
         }
-        .header {
-            background: #1a1a1a;
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 1px solid #333;
+        50% {
+          transform: translateY(-10px);
         }
-        .content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-        .card {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            position: absolute;
-        }
-        .card.active {
-            opacity: 1;
-        }
-        .currency-name {
-            font-size: 24px;
-            color: #888;
-            margin-bottom: 20px;
-        }
-        .price-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .arrow {
-            color: #00ff00;
-            font-size: 36px;
-            animation: bounce 1s infinite;
-        }
-        .price {
-            font-size: 40px;
-            font-weight: bold;
-            color: white;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .percentage {
-            color: #00ff00;
-            font-size: 24px;
-            display: block;
-        }
-        .dots {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #333;
-            transition: background-color 0.3s ease;
-        }
-        .dot.active {
-            background: #fff;
-        }
+      }*/
+      .percentage {
+        color: #00ff00;
+        font-size: 24px;
+        display: block;
+      }
+      .dots {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #333;
+        transition: background-color 0.3s ease;
+      }
+      .dot.active {
+        background: #fff;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>Finansal Göstergeler</h1>
+      <h1>Finansal Göstergeler</h1>
     </div>
-    <div class="content" id="prices">
-    </div>
+    <div class="content" id="prices"></div>
     <div class="dots" id="dots"></div>
 
     <script>
-        const data = [
-            { name: 'Dolar', price: '31.27 ₺' },
-            { name: 'Euro', price: '33.85 ₺' },
-            { name: 'Sterlin', price: '39.46 ₺' },
-            { name: 'Altın', price: '2.047 ₺' },
-            { name: 'BIST 100', price: '9.247' },
-            { name: 'Bitcoin', price: '71.234 $' }
-        ];
+      const data = [
+        { name: "Hoş Geldiniz ABİDİN Bey", price: "100%" },
+        { name: "Dolar", price: "31.27 ₺" },
+        { name: "Euro", price: "33.85 ₺" },
+        { name: "Sterlin", price: "39.46 ₺" },
+        { name: "Altın", price: "2.047 ₺" },
+        { name: "BIST 100", price: "9.247" },
+        { name: "Bitcoin", price: "71.234 $" },
+      ];
 
-        let currentIndex = 0;
+      let currentIndex = 0;
 
-        function createCards() {
-            const container = document.getElementById('prices');
-            const dotsContainer = document.getElementById('dots');
-            
-            data.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = `card ${index === 0 ? 'active' : ''}`;
-                card.innerHTML = `
+      function createCards() {
+        const container = document.getElementById("prices");
+        const dotsContainer = document.getElementById("dots");
+
+        data.forEach((item, index) => {
+          const card = document.createElement("div");
+          card.className = `card ${index === 0 ? "active" : ""}`;
+          card.innerHTML = `
                     <div class="currency-name">${item.name}</div>
                     <div class="price-container">
                         <span class="arrow">↑</span>
                         <span class="price">${item.price}</span>
                     </div>
-                    <span class="percentage">+${(Math.random() * 2 + 0.1).toFixed(2)}%</span>
+                    <span class="percentage">+${(
+                      Math.random() * 2 +
+                      0.1
+                    ).toFixed(2)}%</span>
                 `;
-                container.appendChild(card);
+          container.appendChild(card);
 
-                const dot = document.createElement('div');
-                dot.className = `dot ${index === 0 ? 'active' : ''}`;
-                dotsContainer.appendChild(dot);
-            });
-        }
+          const dot = document.createElement("div");
+          dot.className = `dot ${index === 0 ? "active" : ""}`;
+          dotsContainer.appendChild(dot);
+        });
+      }
 
-        function updateCards() {
-            const cards = document.querySelectorAll('.card');
-            const dots = document.querySelectorAll('.dot');
-            const percentages = document.querySelectorAll('.percentage');
-            
-            cards[currentIndex].className = 'card';
-            dots[currentIndex].className = 'dot';
-            
-            currentIndex = (currentIndex + 1) % cards.length;
-            
-            cards[currentIndex].className = 'card active';
-            dots[currentIndex].className = 'dot active';
-            
-            percentages[currentIndex].textContent = `+${(Math.random() * 2 + 0.1).toFixed(2)}%`;
-        }
+      function updateCards() {
+        const cards = document.querySelectorAll(".card");
+        const dots = document.querySelectorAll(".dot");
+        const percentages = document.querySelectorAll(".percentage");
 
-        createCards();
-        setInterval(updateCards, 4000);
+        cards[currentIndex].className = "card";
+        dots[currentIndex].className = "dot";
 
-        // Service Worker kaydı
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgKGV2ZW50KSA9PiB7CiAgZXZlbnQud2FpdFVudGlsKAogICAgY2FjaGVzLm9wZW4oJ3YxJykudGhlbigoY2FjaGUpID0+IHsKICAgICAgcmV0dXJuIGNhY2hlLmFkZEFsbChbCiAgICAgICAgJy4vJywKICAgICAgXSk7CiAgICB9KQogICk7Cn0pOwoKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIChldmVudCkgPT4gewogIGV2ZW50LnJlc3BvbmRXaXRoKAogICAgY2FjaGVzLm1hdGNoKGV2ZW50LnJlcXVlc3QpCiAgICAgIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UgfHwgZmV0Y2goZXZlbnQucmVxdWVzdCkpCiAgKTsKfSk7');
-        }
+        currentIndex = (currentIndex + 1) % cards.length;
+
+        cards[currentIndex].className = "card active";
+        dots[currentIndex].className = "dot active";
+
+        percentages[currentIndex].textContent = `+${(
+          Math.random() * 2 +
+          0.1
+        ).toFixed(2)}%`;
+      }
+
+      createCards();
+      setInterval(updateCards, 4000);
+
+      // Service Worker kaydı
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register(
+          "data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgKGV2ZW50KSA9PiB7CiAgZXZlbnQud2FpdFVudGlsKAogICAgY2FjaGVzLm9wZW4oJ3YxJykudGhlbigoY2FjaGUpID0+IHsKICAgICAgcmV0dXJuIGNhY2hlLmFkZEFsbChbCiAgICAgICAgJy4vJywKICAgICAgXSk7CiAgICB9KQogICk7Cn0pOwoKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIChldmVudCkgPT4gewogIGV2ZW50LnJlc3BvbmRXaXRoKAogICAgY2FjaGVzLm1hdGNoKGV2ZW50LnJlcXVlc3QpCiAgICAgIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UgfHwgZmV0Y2goZXZlbnQucmVxdWVzdCkpCiAgKTsKfSk7"
+        );
+      }
     </script>
-</body>
+  </body>
 </html>
