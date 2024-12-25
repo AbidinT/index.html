@@ -31,6 +31,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        
 
         padding: 1rem;
       }
@@ -44,7 +45,7 @@
         opacity: 0;
         transition: opacity 0.5s ease;
         position: absolute;
-        border: 2px solid #00ff00;
+        border: 2px solid green;
       }
       .card.active {
         opacity: 1;
@@ -64,15 +65,17 @@
       .arrow {
         width: 0; height: 0; border-left: 15px solid transparent; 
             border-right: 15px solid transparent; 
-            border-bottom: 15px solid #00ff00; margin: 0.5rem;
-        
+            border-bottom: 15px solid green; margin-right: 0.5rem;
+            
+            
+            
         /*animation: bounce 1s infinite;*/
         
       }
       .price {
         font-size: 40px;
         font-weight: bold;
-        color: #00ff00;
+        color: green;
       }
       /*@keyframes bounce {
         0%,
@@ -84,7 +87,7 @@
         }
       }*/
       .percentage {
-        color: #00ff00;
+        color: green;
         font-size: 24px;
         display: block;
       }
@@ -118,7 +121,7 @@
       #upper {
         width: 60px;
         height: 60px;
-        border-color: #00ff00;
+        border-color: green;
         color: #00ff00;
         
         width: 60;
@@ -177,6 +180,7 @@
         data.forEach((item, index) => {
           const card = document.createElement("div");
           card.className = `card ${index === 0 ? "active" : ""}`;
+          
           card.innerHTML = `
                     <div class="currency-name">${item.name}</div>
                     <div class="price-container">
